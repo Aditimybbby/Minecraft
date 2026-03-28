@@ -1,0 +1,10 @@
+{
+  "name": "mc-sidecar",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.19.2",
+    "archiver": "^7.0.1",
+    "busboy": "^1.6.0"
+  }
+}
