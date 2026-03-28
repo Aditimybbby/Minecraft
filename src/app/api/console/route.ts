@@ -1,17 +1,15 @@
-// src/app/api/console/route.ts
 import { NextRequest, NextResponse } from 'next/server'
 import { isAuthenticated } from '@/lib/auth'
 import { sendRcon } from '@/lib/rcon'
 
 const logs: { time: string; line: string; type: 'info'|'warn'|'error' }[] = []
 
-export function pushLog(line: string) {
+function pushLog(line: string) {
   const type = line.includes('ERROR') ? 'error' : line.includes('WARN') ? 'warn' : 'info'
   logs.push({ time: new Date().toISOString(), line, type })
   if (logs.length > 300) logs.shift()
 }
 
-// Sidecar pushes logs here
 export async function PUT(req: NextRequest) {
   if (req.headers.get('x-auth') !== process.env.SIDECAR_SECRET)
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
